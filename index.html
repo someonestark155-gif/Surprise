@@ -2,25 +2,59 @@
 <html>
 <head>
     <title>Happy Hug Day ❤️</title>
+
+    <!-- Mobile Support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         body {
-            margin:0; padding:0;
+            margin:0;
+            padding:0;
             background:black;
             color:white;
             font-family:Arial,sans-serif;
             text-align:center;
             overflow:hidden;
         }
-        .center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
-        h1{ font-size:50px; }
+
+        .center {
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            width:90%;
+        }
+
         .hidden{ display:none; }
-        #countdown{ font-size:80px; }
-        .message{ font-size:28px; animation:fadeIn 2s ease-in-out; }
-        @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
-        .heart{ position:absolute; color:red; font-size:20px; animation:float 5s linear infinite; }
-        @keyframes float{ 0%{ transform:translateY(0); opacity:1;} 100%{ transform:translateY(-800px); opacity:0;} }
+
+        #countdown{
+            font-size:80px;
+        }
+
+        .message{
+            font-size:28px;
+            animation:fadeIn 2s ease-in-out;
+            line-height:1.6;
+        }
+
+        @keyframes fadeIn{
+            from{opacity:0;}
+            to{opacity:1;}
+        }
+
+        .heart{
+            position:absolute;
+            color:red;
+            animation:float 5s linear infinite;
+        }
+
+        @keyframes float{
+            0%{ transform:translateY(0); opacity:1;}
+            100%{ transform:translateY(-800px); opacity:0;}
+        }
     </style>
 </head>
+
 <body onclick="nextPage()">
 
 <audio id="bgMusic" loop>
@@ -29,60 +63,79 @@
 
 <div class="center">
     <div id="countdown">3</div>
-    <div id="page1" class="hidden message">Happy Hug Day, <span id="herName"></span> 🤍</div>
-    <div id="page2" class="hidden message">If I were there right now... I would hold you tight 🤗</div>
-    <div id="page3" class="hidden message"><div id="page3" class="hidden message">
-Close your eyes... 🤍  
-Feel my arms around you...  
-Even if miles separate us,  
-my heart is always holding you 💞  
-– Your Paglu 😎😁
- 💞 Your Paglu tarenaam😎😁</div>
+
+    <div id="page1" class="hidden message">
+        Happy Hug Day, <span id="herName"></span> 🤍
+    </div>
+
+    <div id="page2" class="hidden message">
+        If I were there right now... I would hold you tight 🤗
+    </div>
+
+    <div id="page3" class="hidden message">
+        Close your eyes... 🤍 <br><br>
+        Feel my arms around you... <br><br>
+        Even if miles separate us, <br>
+        my heart is always holding you 💞 <br><br>
+        – Your Paglu 😎😁
+    </div>
 </div>
 
 <script>
-  let name = "Music";
-document.getElementById("herName").innerText = name;
 
+    // Change name here
+    let name = "Music";
+    document.getElementById("herName").innerText = name;
 
-    let count=3;
-    let countdown=document.getElementById("countdown");
-    let interval=setInterval(()=>{
+    let count = 3;
+    let countdown = document.getElementById("countdown");
+
+    let interval = setInterval(()=>{
         count--;
-        countdown.innerText=count;
-        if(count==0){
+        countdown.innerText = count;
+
+        if(count == 0){
             clearInterval(interval);
             countdown.style.display="none";
             document.getElementById("page1").classList.remove("hidden");
         }
     },1000);
 
-    let currentPage=1;
+    let currentPage = 1;
+
     function nextPage(){
-        if(count>0) return;
-        if(currentPage===1){
+        if(count > 0) return;
+
+        let music = document.getElementById('bgMusic');
+        music.volume = 0.7;
+        music.play().catch(()=>{});
+
+        if(currentPage === 1){
             document.getElementById("page1").classList.add("hidden");
             document.getElementById("page2").classList.remove("hidden");
-        } else if(currentPage===2){
+        }
+        else if(currentPage === 2){
             document.getElementById("page2").classList.add("hidden");
             document.getElementById("page3").classList.remove("hidden");
             createHearts();
         }
+
         currentPage++;
-        document.getElementById('bgMusic').play();
     }
 
     function createHearts(){
         setInterval(()=>{
-            let heart=document.createElement("div");
+            let heart = document.createElement("div");
             heart.classList.add("heart");
             heart.innerHTML="❤️";
             heart.style.left=Math.random()*100+"vw";
             heart.style.fontSize=(Math.random()*20+20)+"px";
             document.body.appendChild(heart);
+
             setTimeout(()=>{ heart.remove(); },5000);
         },300);
     }
+
 </script>
 
 </body>
